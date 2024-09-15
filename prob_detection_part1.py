@@ -1,8 +1,11 @@
 import numpy as np
 from random import randint
 from collections import Counter
+import matplotlib
+matplotlib.use('TkAgg')  # or 'Qt5Agg' if TkAgg is not available
 import matplotlib.pyplot as plt
 import pandas as pd
+import tkinter as tk
 
 
 # Constants
@@ -15,6 +18,11 @@ CIV_STEP_SIZE = 100 # civilizations count step size
 # List to store the computed values
 x = [] # ratio of civilizations per volume (x values for polynomial fit)
 y = [] # corresponding probability of detection (y values for polynomial fit)
+
+
+
+
+# *********************** PART 1******************************************************
 
 
 # Main simulation
@@ -47,13 +55,24 @@ data = pd.DataFrame({
 })
 
 
+# ************************** PART 2 *******************************************
+
+
+# Polynomial Regression
+coefficients = np.polyfit(x, y, 4) # 4th order polynomial fit
+p = np.poly1d(coefficients)
+print ("\n{}".format(p))
+xp = np.linspace(0, 5)
+_ = plt.plot(x, y, '.', p(xp), '-')
+plt.ylim(-0.5, 1.5)
+
 # Display the DataFrame
-print(data)
+print(data)  # This is the table results
 
 
 # Plot the graph
 plt.plot(x, y, marker='o')
-plt.title('Probability of Dection vs. Civilizations Per Volume')
+plt.title('Probability of Detection vs. Civilizations Per Volume')
 plt.xlabel('Civilizations Per Volume')
 plt.ylabel('Probability of Detection')
 plt.grid(True)
