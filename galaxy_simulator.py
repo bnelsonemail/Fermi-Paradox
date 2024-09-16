@@ -4,26 +4,20 @@ import math
 import numpy as np
 import prob_detection
 
+
 # *************** MAIN INPUT ***************************
 
 # SCALED_DISC_RADIUS = disc_radius / bubble diameter
 
-# scale radio bubble diameter in light-years
-SCALE = 225 # enter 225 to see Earth's radio bubble
 
-# number of advanced civilizations from Drake equation:
-NUM_CIV = 15_600_000
+SCALE = 225 # scaling factor for radio bubble diameter in light-years.  Enter 225 to see Earth's radio bubble
 
-# Establish the constant pi
-pi = np.pi 
+NUM_CIV = 15_600_000 # number of advanced civilizations from Drake equation
+pi = np.pi # Establish the constant pi
 
-
-# actual Milky Way dimensions in light-years
-DISC_RADIUS = 50_000
-DISC_HEIGHT = 1_000
-DISC_VOLUME = pi * DISC_RADIUS**2 * DISC_HEIGHT
-
-
+DISC_RADIUS = 50_000 # Milky Way dimensions in light-years
+DISC_HEIGHT = 1_000 # Milky Way dimensions in light-years
+DISC_VOLUME = pi * DISC_RADIUS**2 * DISC_HEIGHT # Milky Way volume in cubic light-years
 
 
 # set up display canvas
@@ -34,17 +28,6 @@ c.grid()
 c.configure(scrollregion=(-500, -400, 500, 400)) # configures how the widget is shown in the canvas window.  To center the widget, these numbers need to be half of the screen size
 
 
-import math
-import random
-from math import pi, sqrt, cos, sin
-from random import uniform
-
-# Constants that might be used in the class
-DISC_RADIUS = 50000  # Example disc radius of the galaxy in light-years
-DISC_VOLUME = 1.5e12  # Example volume of the galaxy in cubic light-years
-SCALE = 1000  # Scaling factor for radio bubble size
-NUM_CIV = 10000  # Hypothetical number of civilizations
-
 class Galaxy:
     """
     Class that defines functions to calculate the probability of communication with other civilizations 
@@ -52,11 +35,11 @@ class Galaxy:
     for visualizing galaxy features such as spiral arms and generating random polar coordinates.
     
     Attributes:
-    - b: Parameter related to the spiral arm creation (specific meaning can vary).
-    - r: Parameter related to the spiral arm creation (specific meaning can vary).
+    - b: Parameter related to the logrithmic spiral equation (constant).
+    - r: scaled galactic disc radius.
     - rot_fac: Rotation factor for the galaxy's spiral arms.
-    - fuz_fac: Fuzziness factor for the spiral arms to simulate realistic variance.
-    - arm: Number of spiral arms in the galaxy.
+    - fuz_fac: Fuzziness factor for the spiral arms to simulate realistic variance. This is a random shift in star position in arm, appied to 'fuzz' variable
+    - arm: Number of spiral arms in the galaxy (0 = main arm, 1 = trailing stars).
     """
 
     def __init__(self, b, r, rot_fac, fuz_fac, arm):
@@ -65,11 +48,11 @@ class Galaxy:
         galaxy characteristics.
 
         Parameters:
-        - b (float): Parameter for spiral arm creation (specific usage depends on spiral method).
-        - r (float): Parameter for spiral arm creation (specific usage depends on spiral method).
-        - rot_fac (float): Rotation factor, affecting the twist of spiral arms.
-        - fuz_fac (float): Fuzziness factor, introducing randomness to spiral arm appearance.
-        - arm (int): Number of spiral arms in the galaxy.
+        - b: Parameter related to the logrithmic spiral equation (constant).
+        - r: scaled galactic disc radius.
+        - rot_fac: Rotation factor for the galaxy's spiral arms.
+        - fuz_fac: Fuzziness factor for the spiral arms to simulate realistic variance. This is a random shift in star position in arm, appied to 'fuzz' variable
+        - arm: Number of spiral arms in the galaxy (0 = main arm, 1 = trailing stars).
         """
         self.b = b
         self.r = r
@@ -144,8 +127,8 @@ class Galaxy:
         theta = uniform(0, 2 * pi)  # 2*pi is the radian equivalent of 360 degrees
         
         # Convert polar to Cartesian coordinates, scale them by the disc's radius
-        x = round(sqrt(r) * cos(theta) * disc_radius_scaled)
-        y = round(sqrt(r) * sin(theta) * disc_radius_scaled)
+        x = round(math.sqrt(r) * math.cos(theta) * disc_radius_scaled)
+        y = round(math.sqrt(r) * math.sin(theta) * disc_radius_scaled)
         
         return x, y  # x, y will have values between -1 and +1.  This is due to r
     
@@ -157,11 +140,11 @@ class Galaxy:
         simulating a realistic spiral galaxy appearance.
 
         Parameters:
-        - b (float): Shape parameter for the spiral (affects the tightness of the spiral).
-        - r (float): Radius parameter affecting the spread of the spiral arms.
-        - rot_fac (float): Rotation factor, affecting the number of twists.
-        - fuz_fac (float): Fuzziness factor, adding randomness to the arm's shape.
-        - arm (int): Number of spiral arms in the galaxy.
+        - b: Parameter related to the logrithmic spiral equation (constant).
+        - r: scaled galactic disc radius.
+        - rot_fac: Rotation factor for the galaxy's spiral arms.
+        - fuz_fac: Fuzziness factor for the spiral arms to simulate realistic variance. This is a random shift in star position in arm, appied to 'fuzz' variable
+        - arm: Number of spiral arms in the galaxy (0 = main arm, 1 = trailing stars).
 
         Returns:
         - None (Typically, this function would generate coordinates or a visual representation).
@@ -182,3 +165,10 @@ class Galaxy:
                c.create_oval(x-2, y-2, x+2, y+2, fill='white', outline='') 
             elif arm == 0 and int(x % 2) != 0:
                 c.create_oval(x-1, y-1, x+1, y+1, fill='white', outline='')
+            elif arm == 1:
+                c.create_oval(x, y, x, y, fill='white', outline='')
+    
+    
+    
+    
+    
