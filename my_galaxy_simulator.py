@@ -56,7 +56,7 @@ class Galaxy:
         elif ratio >= 5: # set high ratios to probabity of 1
             detection_prob = 1
         else:
-            detection_prob = -0.004757 * ratio**4 + 0.06681 * ratio**3 - 0.3605 * ratio**2 + 0.9215 * ratio + 0.00826
+            detection_prob = -0.004757 * ratio**4 + 0.06681 * ratio**3 - 0.3605 * ratio**2 + 0.9215 * ratio + 0.00826 # this equation was generated in the prob_detection.py
         return round(detection_prob, 3)
     
     
