@@ -42,7 +42,7 @@ class Galaxy:
     - arm: Number of spiral arms in the galaxy (0 = main arm, 1 = trailing stars).
     """
 
-    def __init__(self, b, r, rot_fac, fuz_fac, arm):
+    def __init__(self, b, r, rot_fac, fuz_fac, arm, density):
         """
         Initialize the Galaxy object with parameters for spiral arm creation and 
         galaxy characteristics.
@@ -59,6 +59,7 @@ class Galaxy:
         self.rot_fac = rot_fac
         self.fuz_fac = fuz_fac
         self.arm = arm 
+        self.density = density
     
     def scale_galaxy(self):
         """
@@ -155,11 +156,15 @@ class Galaxy:
         spiral_stars = []
         fuzz = int(0.030 * abs(r)) # randomly shift star locations
         theta_max_degrees = 520
-        for i in range(theta_max_degrees): # range(0, 600, 2) for no black hole
+        
+        for i in range(theta_max_degrees): # range(0, 600, 2) for no black hole, Loop through angle steps to create the spiral
             theta = math.radians(i)
+            # Calculate star positions using logarithmic spiral formula and add randomness
             x = r * math.exp(b * theta) * math.cos(theta + pi * rot_fac) + randint(-fuzz, fuzz) * fuz_fac
             y = r * math.exp(b * theta) * math.sin(theta + pi * rot_fac) + randint(-fuzz, fuzz) * fuz_fac
-            spiral_stars.append((x,y))
+            spiral_stars.append((x,y)) # Store the star coordinates
+            
+        # Draw stars on the canvas based on the calculated positions
         for x, y in spiral_stars:
             if arm == 0 and int(x % 2) == 0:
                c.create_oval(x-2, y-2, x+2, y+2, fill='white', outline='') 
@@ -168,7 +173,29 @@ class Galaxy:
             elif arm == 1:
                 c.create_oval(x, y, x, y, fill='white', outline='')
     
+    def star_haze(disc_radius_scaled, random_polar_coordinates, density):
+        """
+        Create a diffuse haze of faint stars randomly distributed within the galactic disc.
+        
+        This function generates a number of small, faint stars and places them at random
+        positions within the scaled galactic disc to simulate a star haze or background starfield.
+        The number of stars is determined by the scaled radius of the disc and the specified density.
+
+        Args:
+            disc_radius_scaled (int): The radius of the galactic disc, scaled to the size of the radio bubble.
+                                    This determines the area within which stars will be randomly placed.
+            density (int): A multiplier that controls the number of stars generated. A higher density
+                        value results in more stars, creating a denser haze.
+                        
+        Returns:
+            None: The function draws stars directly on the tkinter canvas.
+        """
+        for i in range(0, disc_radius_scaled * density):
+            x, y = random_polar_coordinates(disc_radius_scaled)
+            c.create_text(x, y, fill='white', font=('Helvetica', '7'), text='.')
+
+            
     
     
-    
-    
+# if __name__ == '__main__':
+#     main()
