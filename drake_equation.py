@@ -86,7 +86,7 @@ n_e = 0.2
 f_l = 0.5
 f_i = 1
 f_c = 0.1
-L = 1000
+L = 10000
 
 # CALCULATION OF DRAKE'S NUMBER
 

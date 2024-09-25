@@ -31,6 +31,62 @@ c.configure(scrollregion=(-500, -400, 500, 400))
 
 
 class Galaxy:
+    """
+    A class to simulate and visualize the structure of the Milky Way galaxy.
+
+    The Galaxy class provides tools to simulate the Milky Way galaxy's spiral
+    arms and diffuse star haze using a logarithmic spiral model. It also
+    calculates the probability of detection of advanced civilizations based
+    on the scaled galactic volume and the number of civilizations.
+
+    The class uses tkinter for graphical visualization, presenting the
+    galaxy's structure on a 2D canvas and including key attributes like the
+    scale of the galaxy, the number of spiral arms, and the density of stars.
+
+    Attributes
+    ----------
+    b : float
+        Parameter for the logarithmic spiral equation, controlling the
+        curvature of the spiral arms.
+    r : float
+        The scaled radius of the galactic disc in light-years.
+    rot_fac : float
+        Rotation factor for positioning spiral arms within the galaxy.
+    fuz_fac : float
+        Fuzziness factor to introduce variability in the position of stars in
+        the spiral arms.
+    arm : int
+        Indicates whether stars belong to the main arm (0) or trailing arm (1).
+    density : int
+        Density factor controlling the number of randomly distributed stars
+        in the diffuse star haze.
+
+    Methods
+    -------
+    __init__(self, b, r, rot_fac, fuz_fac, arm, density)
+        Initializes the Galaxy object with parameters to define spiral arms
+        and overall structure.
+    scale_galaxy(self)
+        Scales the galaxy's dimensions and volume based on the size of a radio
+        bubble.
+    detect_prob(self, disc_volume_scaled)
+        Calculates the probability that civilizations can detect each other
+        based on the scaled galactic volume and the number of civilizations.
+    random_polar_coordinates(self, disc_radius_scaled)
+        Generates random (x, y) coordinates within the galactic disc using
+        polar coordinates for uniform distribution in a 2D space.
+    spirals(self, b, r, rot_fac, fuz_fac, arm)
+        Creates the spiral arms of the galaxy on the tkinter canvas using a
+        logarithmic spiral model and plots stars accordingly.
+    star_haze(self, disc_radius_scaled, density)
+        Creates a diffuse star haze across the galactic disc by randomly
+        distributing small, faint stars.
+    main(self)
+        Orchestrates the scaling of the galaxy, calculates civilization
+        detection probability, and displays the galaxy with spiral arms,
+        star haze, and statistics on a tkinter canvas.
+    """
+
     def __init__(self, b, r, rot_fac, fuz_fac, arm, density):
         """Initialize the Galaxy object with parameters for spiral arm.
 
