@@ -5,6 +5,7 @@ Created on Tue Sep 17 20:33:02 2024.
 @author: BNELS
 """
 import tkinter as tk
+from drake_equation import DRAKE_NUMBER
 from random import randint, uniform, random
 import math
 import numpy as np
@@ -12,7 +13,7 @@ import numpy as np
 # *************** MAIN INPUT ***************************
 
 SCALE = 225  # scaling factor for radio bubble diameter in light-years.
-NUM_CIV = 15_600_000  # number of advanced civilizations from Drake equation
+NUM_CIV = DRAKE_NUMBER  # number of advanced civilizations from Drake equation
 pi = np.pi  # Establish the constant pi
 
 DISC_RADIUS = 50_000  # Milky Way dimensions in light-years
